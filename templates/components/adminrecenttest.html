@@ -1,0 +1,24 @@
+ <div class="bg-white p-4 shadow mt-4">
+                    <h6 class="text-lg font-bold dark:text-white">Recently Created Test</h6>
+                    <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+
+
+                    <ul class="text-sm font-medium text-gray-900 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        {% for r in recent_tests %}
+                        <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                            {{r.test_name}}
+                            <br/>
+                            <span class="text-gray-500">{{r.created_by}}</span>
+                        </li>
+
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'tests' %}" class="inline-flex justify-center items-center py-3 mt-4 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                View More
+                <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </a>
+                </div>
+
+

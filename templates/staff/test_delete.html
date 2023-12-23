@@ -1,0 +1,32 @@
+{% extends 'master/master.html' %}
+{% block title %}Delete Confirm ?{% endblock %}
+{% block body %}
+<body class="bg-[#1E293B]">
+    <!-- Sidebar -->
+   {% if request.user.is_staff %}
+
+    <!-- Main Content -->
+    <div class="ml-1/5 p-6">
+        <!-- Top Navigation -->
+        {% include 'components/staffnav.html' %}
+        <!-- Content Container -->
+        <div class="mt-4 p-4 bg-white shadow">
+            <!-- Forms, components, and content here -->
+            <form class="mb-8" method="post">
+                {% csrf_token %}
+                <label class="block mb-2 font-semibold">Are you sure you want to Delete  <em>{{object}}</em> ?</label>
+                {{form}}
+                <div class="flex items-end mt-4">
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Yes</button>
+                        <a href="{% url 'tests' %}" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium  text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+{% else %}
+  {% include 'components/notauthuser.html' %}
+{% endif %}
+
+</body>
+{% endblock %}

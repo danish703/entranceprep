@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: entranceprep
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: staff
+
+  web:
+    build: .
+    command: python manage.py runserver
+    volumes:
+      - .:/app
+    ports:
+      - "6000:6000"
+    depends_on:
+      - db

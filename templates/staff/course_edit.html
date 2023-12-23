@@ -1,0 +1,30 @@
+{% extends 'master/master.html' %}
+{% block title %}{{request.user.username}} - Courses {% endblock %}
+{% block body %}
+<body class="bg-[#1E293B]">
+    <!-- Sidebar -->
+   {% if request.user.is_staff %}
+
+    <!-- Main Content -->
+    <div class="ml-1/5 p-6">
+        <!-- Top Navigation -->
+        {% include 'components/staffnav.html' %}
+        <!-- Content Container -->
+        <div class="mt-4 p-4 bg-white shadow">
+            <!-- Forms, components, and content here -->
+            <form class="mb-8" method="post" enctype="multipart/form-data">
+                 {{form.as_p}}
+                <hr/>
+                        {% csrf_token %}
+                <button type="submit" class="w-full text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
+                            </button>
+            </form>
+            <hr/>
+        </div>
+    </div>
+{% else %}
+  {% include 'components/notauthuser.html' %}
+{% endif %}
+
+</body>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'master/master.html' %}
+{% block title %} Dashboard {% endblock %}
+{% block body %}
+<body class="bg-[#1E293B]">
+    <!-- Sidebar -->
+    {% if not request.user.is_staff %}
+    <!-- Main Content -->
+    <div class="ml-1/5 p-6">
+        <!-- Top Navigation -->
+        <nav class="bg-white p-4 shadow">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-semibold">Welcome ! {% if request.user.first_name %}{{request.user.first_name}} {% else %} {{request.user.username}} {% endif %}</div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hover:text-gray-600">Profile</a>
+                    <a href="#" class="hover:text-gray-600">Profile</a>
+                    <a href="#" class="hover:text-gray-600">Profile</a>
+                    <a href="#" class="hover:text-gray-600">Profile</a>
+                    <a href="#" class="hover:text-gray-600">Purchase History</a>
+                    <a href="{% url 'signout' %}" class="hover:text-gray-600">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Container -->
+        <div class="mt-4 p-4 bg-white shadow">
+            <!-- Forms, components, and content here -->
+            <form class="mb-8">
+                <label class="block mb-2 font-semibold">Form Example</label>
+                <input type="text" class="w-full p-2 border rounded" placeholder="Enter something">
+            </form>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <h2 class="text-lg font-semibold mb-4">Chart Example 1</h2>
+                    <!-- Include your chart component here -->
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <h2 class="text-lg font-semibold mb-4">Chart Example 2</h2>
+                    <!-- Include another chart component here -->
+                </div>
+            </div>
+        </div>
+    </div>
+  {% else %}
+        {% include 'components/notauthuser.html' %}
+  {% endif %}
+
+</body>
+{% endblock %}

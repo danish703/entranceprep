@@ -1,0 +1,36 @@
+{% extends 'master/master.html' %}
+{% block title %}{{request.user.username}} - Admin {% endblock %}
+{% block body %}
+<body class="bg-[#1E293B]">
+    <!-- Sidebar -->
+   {% if request.user.is_staff %}
+
+    <!-- Main Content -->
+    <div class="ml-1/5 p-6">
+        <!-- Top Navigation -->
+        {% include 'components/staffnav.html' %}
+        <!-- Content Container -->
+        <div class="mt-4 p-4 bg-white shadow">
+            <!-- Forms, components, and content here -->
+            <form class="mb-8">
+                <label class="block mb-2 font-semibold">Form Example</label>
+                <input type="text" class="w-full p-2 border rounded" placeholder="Enter something">
+            </form>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <h2 class="text-lg font-semibold mb-4">Chart Example 1</h2>
+                    <!-- Include your chart component here -->
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <h2 class="text-lg font-semibold mb-4">Chart Example 2</h2>
+                    <!-- Include another chart component here -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+  {% include 'components/notauthuser.html' %}
+{% endif %}
+
+</body>
+{% endblock %}

@@ -1,0 +1,447 @@
+{% extends 'master/master.html' %}
+{% block title %}{{question.test}}{% endblock %}
+{% block body %}
+<body class="bg-[#1E293B]">
+    <!-- Sidebar -->
+   {% if request.user.is_staff %}
+
+    <!-- Main Content -->
+    <div class="ml-1/5 p-6">
+        <!-- Top Navigation -->
+        {% include 'components/staffnav.html' %}
+        <!-- Content Container -->
+        <div class="mt-4 p-4 bg-white shadow">
+            <div class="relative w-full max-h-full">
+        <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+
+        <form method="POST" action="{% url 'question_edit' question.id %}">
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+
+                <label for="question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
+                <textarea id="question" name="question" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add Questions...">
+                    {{question}}
+                </textarea>
+                <input type="hidden" value="{{question.id}}" name="qid">
+                 <div class="grid md:grid-cols-4 md:gap-2">
+                    <div class="relative">
+                        {% if question.option1|first in "/media" %}
+                          <div class="relative">
+                        <input type="text" value="{{question.option1}}" style="display:none;" name="option1" id="option1" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option1" id="lbl_option1" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 1</label>
+                        <img id="option1choosedImage" class="h-auto max-w-xs" src="{{question.option1}}" alt="image description">
+
+                          <a href="#" id="option1trash">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option1Image">
+                            <svg style="display:none;" id="option1IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option1IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption4" id="option1Image" class="mt-4" style="display:none;">
+                      </div>
+                        {% else  %}
+                        <input type="text" value="{{question.option1}}" name="option1" id="option1" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option1"  id="lbl_option1" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 1</label>
+                        <img id="option1choosedImage" style="display:none;" class="h-auto max-w-xs" src="" alt="image description">
+                        <a href="#" id="option1trash" style="display:none;">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </a>
+                        <label for="option1Image">
+                            <svg id="option1IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option1IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption1" id="option1Image" class="mt-4" style="display:none;">
+                        {% endif %}
+                    </div>
+                       {% if question.option2|first in "/media" %}
+                          <div class="relative">
+                        <input type="text" value="{{question.option2}}" style="display:none;" name="option2" id="option2" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option2" id="lbl_option2" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 4</label>
+                        <img id="option2choosedImage" class="h-auto max-w-xs" src="{{question.option2}}" alt="image description">
+
+                          <a href="#" id="option2trash">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option2Image">
+                            <svg style="display:none;" id="option2IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option2IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption2" id="option2Image" class="mt-4" style="display:none;">
+                      </div>
+                        {% else  %}
+                      <div class="relative">
+                        <input type="text" value="{{question.option2}}" name="option2" id="option2" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option2" id="lbl_option2" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 2</label>
+                        <img id="option2choosedImage" style="display:none;" class="h-auto max-w-xs" src="" alt="image description">
+                          <a href="#" id="option2trash" style="display:none;">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option2Image">
+                            <svg id="option2IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option2IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption2" id="option2Image" class="mt-4" style="display:none;">
+                          </div>
+                        {% endif %}
+
+                    {% if question.option3|first in "/media" %}
+                      <div class="relative">
+                        <input type="text" value="{{question.option3}}" style="display:none;" name="option3" id="option3" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option3" id="lbl_option3" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 3</label>
+                        <img id="option3choosedImage" class="h-auto max-w-xs" src="{{question.option3}}" alt="image description">
+
+                          <a href="#" id="option3trash">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option3Image">
+                            <svg style="display:none;" id="option3IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option3IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption3" id="option3Image" class="mt-4" style="display:none;">
+                      </div>
+                    {% else %}
+                     <div class="relative">
+                        <input type="text" value="{{question.option3}}" name="option3" id="option3" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option3" id="lbl_option3" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 3</label>
+                        <img id="option3choosedImage" style="display:none;" class="h-auto max-w-xs" src="" alt="image description">
+                          <a href="#" id="option3trash" style="display:none;">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option3Image">
+                            <svg id="option3IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option3IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file"  name="imageOption3" id="option3Image" class="mt-4" style="display:none;">
+                    </div>
+                    {% endif %}
+
+
+
+
+                     {% if question.option4|first in "/media" %}
+                      <div class="relative">
+                        <input type="text" value="{{question.option4}}" style="display:none;" name="option4" id="option4" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option4" id="lbl_option4" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 4</label>
+                        <img id="option4choosedImage" class="h-auto max-w-xs" src="{{question.option4}}" alt="image description">
+
+                          <a href="#" id="option4trash">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option4Image">
+                            <svg style="display:none;" id="option4IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option4IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption4" id="option4Image" class="mt-4" style="display:none;">
+                      </div>
+                     {% else %}
+                     <div class="relative">
+                        <input type="text" value="{{question.option4}}" name="option4" id="option4" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="option4" id="lbl_option4" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Option 4</label>
+                        <img id="option4choosedImage" style="display:none;" class="h-auto max-w-xs" src="" alt="image description">
+
+                          <a href="#" id="option4trash" style="display:none;">
+                            <svg class="h-6 w-6 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        <label for="option4Image">
+                            <svg id="option4IconUpload" class="h-6 w-6 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />  <polyline points="17 8 12 3 7 8" />  <line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg style="display:none;" id="option4IconLoading" aria-hidden="true" class="mt-2 w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                        </label>
+                        <input type="file" name="imageOption4" id="option4Image" class="mt-4" style="display:none;">
+                      </div>
+                     {% endif %}
+                 </div>
+
+                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                 <div class="relative">
+                        <label for="countries_multiple" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Correct Option</label>
+                        <select name="correct" id="countries_multiple" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option value="1" {% if question.correctoption == "1" %} selected {% endif %}>Option 1</option>
+                          <option value="2" {% if question.correctoption == "2" %} selected {% endif %}>Option 2</option>
+                          <option value="3" {% if question.correctoption == "3" %} selected {% endif %}>Option 3</option>
+                          <option value="4" {% if question.correctoption == "4" %} selected {% endif %}>Option 4</option>
+                        </select>
+
+                    </div>
+            </div>
+            {% csrf_token %}
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button data-modal-hide="defaultModal" type="submit" id="questionBtn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+            </div>
+        </form>
+        </div>
+    </div>
+        </div>
+    </div>
+{% else %}
+  {% include 'components/notauthuser.html' %}
+{% endif %}
+
+</body>
+{% endblock %}
+
+{% block  script %}
+    <script>
+tinymce.init({
+  selector: '#question',
+  plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code ',
+  menubar:'file edit view insert format tools table help',
+  toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft |aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor | backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample |a11ycheck ltr rtl | showcomments addcomment code',
+  a_configuration_option: 400,
+  image_title: true,
+  image_caption: true,
+  automatic_uploads: true,
+  image_advtab: true,
+  file_picker_types: "image media",
+   file_picker_callback: function (cb, value, meta) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "file");
+        if (meta.filetype == "image") {
+            input.setAttribute("accept", "image/*");}
+        if (meta.filetype == "media") {
+        input.setAttribute("accept", "video/*");}
+
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                var id = "blobid" + (new Date()).getTime();
+                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(",")[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+               cb(blobInfo.blobUri(), { title: file.name });
+             };
+             reader.readAsDataURL(file);
+         };
+         input.click();
+      },
+
+});
+
+   function question_delete(url){
+      var res = confirm("Are you sure you want to delete ?");
+      if(res){
+         window.location.href = url;
+      }
+   }
+   $(document).ready(function(){
+     $('#option1Image').change(function(){
+                $('#option1IconUpload').css('display','none');
+                $('#option1IconLoading').css('display','block');
+                const file = $(this)[0].files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+                $.ajax({
+                    url: {% url 'upload_image' %},
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                     $('#option1').css('display','none');
+                       $('#option1IconLoading').css('display','none');
+                       $('#option1choosedImage').css('display','block');
+                      $('#option1choosedImage').attr('src','{{MEDIA_URL}}'+response.url);
+                      $('#option1').attr('value',$('#option1choosedImage').attr('src'));
+                      $('#option1trash').css('display','block');
+                      $('#option1trash').attr('imgid',response.id)
+                    }
+                });
+     });
+   });
+
+
+   //option 2
+
+      $(document).ready(function(){
+     $('#option2Image').change(function(){
+                $('#option2IconUpload').css('display','none');
+                $('#option2IconLoading').css('display','block');
+                const file = $(this)[0].files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+                $.ajax({
+                    url: {% url 'upload_image' %},
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                     $('#option2').css('display','none');
+                       $('#option2IconLoading').css('display','none');
+                       $('#option2choosedImage').css('display','block');
+                      $('#option2choosedImage').attr('src','{{MEDIA_URL}}'+response.url);
+                      $('#option2').attr('value',$('#option2choosedImage').attr('src'));
+                      $('#option2trash').css('display','block');
+                      $('#option2trash').attr('imgid',response.id)
+                    }
+                });
+     });
+   });
+
+   //option3
+     $(document).ready(function(){
+     $('#option3Image').change(function(){
+                $('#option3IconUpload').css('display','none');
+                $('#option3IconLoading').css('display','block');
+                const file = $(this)[0].files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+                $.ajax({
+                    url: {% url 'upload_image' %},
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                     $('#option3').css('display','none');
+                      $('#option3IconLoading').css('display','none');
+                      $('#option3choosedImage').css('display','block');
+                      $('#option3choosedImage').attr('src','{{MEDIA_URL}}'+response.url);
+                      $('#option3').attr('value',$('#option3choosedImage').attr('src'));
+                      $('#option3trash').css('display','block');
+                      $('#option3trash').attr('imgid',response.id)
+                    }
+                });
+     });
+   });
+
+    //option4
+     $(document).ready(function(){
+     $('#option4Image').change(function(){
+                $('#option4IconUpload').css('display','none');
+                $('#option4IconLoading').css('display','inline');
+                const file = $(this)[0].files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+                $.ajax({
+                    url: {% url 'upload_image' %},
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                     $('#option4').css('display','none');
+                       $('#option4IconLoading').css('display','none');
+                       $('#option4choosedImage').css('display','inline');
+                      $('#option4choosedImage').attr('src','{{MEDIA_URL}}'+response.url);
+                      $('#option4').attr('value',$('#option4choosedImage').attr('src'));
+                      $('#option4trash').css('display','block');
+                      $('#option4trash').attr('imgid',response.id)
+                    }
+                });
+     });
+   });
+//option 1
+  $(document).ready(function(){
+     $('#option1trash').click(function(){
+       const formData = new FormData();
+       var v = $('#option1trash').attr('imgid');
+       formData.append('imgid',v);
+       $.ajax({
+            url: {% url 'delete_image' %},
+            method:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(response){
+              $('#option1trash').css('display','none');
+              $('#option1').attr('value','');
+              $('#option1').css('display','block');
+              $('#option1choosedImage').css('display','none');
+              $('#option1IconUpload').css('display','block');
+            }
+       });
+     });
+   });
+
+//option 2
+  $(document).ready(function(){
+     $('#option2trash').click(function(){
+       const formData = new FormData();
+       var v = $('#option2trash').attr('imgid');
+       formData.append('imgid',v);
+       $.ajax({
+            url: {% url 'delete_image' %},
+            method:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(response){
+              $('#option2trash').css('display','none');
+              $('#option2').attr('value','');
+              $('#option2').css('display','block');
+              $('#option2choosedImage').css('display','none');
+              $('#option2IconUpload').css('display','block');
+            }
+       });
+     });
+   });
+
+//option 3
+   $(document).ready(function(){
+     $('#option3trash').click(function(){
+       const formData = new FormData();
+       var v = $('#option3trash').attr('imgid');
+       formData.append('imgid',v);
+       $.ajax({
+            url: {% url 'delete_image' %},
+            method:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(response){
+              $('#option3trash').css('display','none');
+              $('#option3').attr('value','');
+              $('#option3').css('display','block');
+              $('#option3choosedImage').css('display','none');
+              $('#option3IconUpload').css('display','block');
+            }
+       });
+     });
+   });
+//option 4
+  $(document).ready(function(){
+     $('#option4trash').click(function(){
+       const formData = new FormData();
+       var v = $('#option4trash').attr('imgid');
+       formData.append('imgid',v);
+       $.ajax({
+            url: {% url 'delete_image' %},
+            method:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(response){
+              $('#option4trash').css('display','none');
+              $('#option4').attr('value','');
+              $('#option4').css('display','block');
+              $('#option4choosedImage').css('display','none');
+              $('#option4IconUpload').css('display','block');
+            }
+       });
+     });
+   });
+    </script>
+
+{% endblock %}
